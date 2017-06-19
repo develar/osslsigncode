@@ -95,12 +95,17 @@ PKG_CHECK_MODULES(
 	[OPENSSL],
 	[libcrypto >= 0.9.8],
 	,
-	[AC_CHECK_LIB(
-		[crypto],
-		[RSA_verify],
-		[OPENSSL_LIBS="-lcrypto ${SOCKETS_LIBS} ${DL_LIBS}"],
-		[AC_MSG_ERROR([OpenSSL 0.9.8 or later is required. http://www.openssl.org/])],
-		[${DL_LIBS}]
+	[PKG_CHECK_MODULES(
+		[OPENSSL],
+		[openssl >= 0.9.8],
+		,
+		[AC_CHECK_LIB(
+			[crypto],
+			[RSA_verify],
+			[OPENSSL_LIBS="-lcrypto ${SOCKETS_LIBS} ${DL_LIBS}"],
+			[AC_MSG_ERROR([OpenSSL 0.9.8 or later is required. http://www.openssl.org/])],
+			[${DL_LIBS}]
+		)]
 	)]
 )
 
